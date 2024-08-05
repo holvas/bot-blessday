@@ -53,12 +53,3 @@ const start = () => {
 }
 
 start();
-
-
-/*
-    - git init //ініціалізація
-    - git add . //індексація
-    - git commit -m 'залиш тут свій коміт' //робимо коміт
-    - git remote set-url origin git@github.com-holvas:holvas/bot-blessday.git //посилання на віддалений репозиторій
-    - git push origin master //заливаємо на git
-    */

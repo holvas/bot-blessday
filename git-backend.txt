@@ -1,0 +1,35 @@
+// Розгортання проекту на git через термінал
+    - git init //ініціалізація
+    - git add . //індексація
+    - git commit -m 'залиш тут свій коміт' //робимо коміт
+    - git remote set-url origin git@github.com-holvas:holvas/bot-blessday.git //посилання на віддалений репозиторій
+    - git push origin master //заливаємо на git
+
+   // -------------BACKEND----------------
+    //підключитися до серверу по ssh
+    ssh root@ip_адреса_сервера
+    sudo apt update //оновленя всіх пакетів
+
+    //встановити git
+    sudo apt install git
+ 
+    //встановити node.js
+    sudo apt install node.js
+
+    //встановити npm
+    sudo apt install npm
+    
+    //викачати проект з git-a
+    git clone https://github.com/holvas/bot-blassday.git
+    cd bot-blassday (ls)
+
+    //викачати всі необхідні для проекту залежності
+    npm i
+
+    //запустити сервер (у фоновому режимі)
+    - знов запустити бот по ssh
+    npm i pm2 -g //керування npm
+    - входимо у діректорію бота (все через термінал) та прописуємо pm2 start index.js (pm2 stpo index.js)
+
+    //створити базу даних
+    
