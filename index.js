@@ -4,6 +4,8 @@ const cron = require('node-cron'); //імпортує модуль node-cron
 const  {verseOptions, againOptions} = require('./options');
 const token = process.env.TELEGRAM_BOT_TOKEN //токен взаїмодії з ботом
 
+console.log('Telegram Token:', token);
+
 //текстові повідомлення
 const bot = new TelegramApi(token, {polling: true}); 
 const chats = {};
@@ -15,7 +17,19 @@ const startChoose = async (chatId) => {
     await bot.sendMessage(chatId, 'Напиши оберане число', verseOptions);
 }
 
-const start = () => {
+const start = async () => {
+        // Відключення вебхука перед початком опитування
+        await bot.deleteWebhook();
+
+        // Тестування доступу до Інтернету
+        https.get('https://www.google.com', (res) => {
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+        }).on('error', (e) => {
+            console.error('Error making request:', e.message);
+        });
+
+
     //встановлення команд бота по api
     bot.setMyCommands([
         {command: '/start', description: 'Привітання'},
@@ -44,6 +58,9 @@ const start = () => {
     bot.on('callback_query', async msg => {
         const data = msg.data;
         const chatId = msg.message.chat.id;
+
+        console.log(chatId);
+
         if (data === '/again') {
             return startChoose(chatId);
         }
@@ -55,10 +72,10 @@ const start = () => {
     });
 
     // // Cron job для регулярних повідомлень
-    // cron.schedule('0 * * * *', () => {
+    // cron.schedule('0 8-21 * * *', async () => {
     //     const chatId = msg.chat.id; // Використовуйте ваш чат ID
     //     const verse = 'Here is your hourly Bible verse!';
-    //     bot.sendMessage(chatId, verse);
+    //     await bot.sendMessage(chatId, verse);
     // });
 };
 
