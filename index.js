@@ -1,6 +1,9 @@
-const TelegramApi = require('node-telegram-bot-api'); //імпортуємо пакет
+require('dotenv').config();
+const TelegramApi = require('node-telegram-bot-api'); //імпортуємо модуль telegram-bot
+const cron = require('node-cron'); //імпортує модуль node-cron
 const  {verseOptions, againOptions} = require('./options');
 const token = process.env.TELEGRAM_BOT_TOKEN //токен взаїмодії з ботом
+
 //текстові повідомлення
 const bot = new TelegramApi(token, {polling: true}); 
 const chats = {};
@@ -49,7 +52,14 @@ const start = () => {
         } else {
             return await bot.sendMessage(chatId, `На жаль, ви не вгадали. Я загадував число ${chats[chatId]}.`, againOptions);
         }
-    })
-}
+    });
+
+ // Cron job для регулярних повідомлень
+ cron.schedule('0 * * * *', () => {
+    const chatId = 'YOUR_CHAT_ID'; // Використовуйте ваш чат ID
+    const verse = 'Here is your hourly Bible verse!';
+    bot.sendMessage(chatId, verse);
+});
+};
 
 start();
