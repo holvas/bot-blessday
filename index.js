@@ -54,12 +54,12 @@ const start = () => {
         }
     });
 
- // Cron job для регулярних повідомлень
- cron.schedule('0 * * * *', () => {
-    //const chatId = 'YOUR_CHAT_ID'; // Використовуйте ваш чат ID
-    const verse = 'Here is your hourly Bible verse!';
-    bot.sendMessage(chatId, verse);
-});
+    // // Cron job для регулярних повідомлень
+    // cron.schedule('0 * * * *', () => {
+    //     const chatId = msg.chat.id; // Використовуйте ваш чат ID
+    //     const verse = 'Here is your hourly Bible verse!';
+    //     bot.sendMessage(chatId, verse);
+    // });
 };
 
 start();
