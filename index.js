@@ -59,6 +59,8 @@ const start = async () => {
     bot.on('message', async msg => {
         const text = msg.text; //отримання повідомлень
         const chatId = msg.chat.id;  
+
+        console.log('Received message:', text, 'from chat ID:', chatId);
         
         if (text === '/start') {
             await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/0cc/ba1/0ccba11f-e506-3c8c-8862-a4d914dcf683/2.jpg`); //відправка повідомлень
@@ -77,7 +79,7 @@ const start = async () => {
         const data = msg.data;
         const chatId = msg.message.chat.id;
 
-        console.log(chatId);
+        console.log('Callback query data:', data, 'from chat ID:', chatId);
 
         if (data === '/again') {
             return startChoose(chatId);
