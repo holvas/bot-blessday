@@ -17,9 +17,27 @@ const startChoose = async (chatId) => {
     await bot.sendMessage(chatId, 'Напиши оберане число', verseOptions);
 }
 
+const deleteWebhook = async () => {
+    return new Promise((resolve, reject) => {
+        const url = `https://api.telegram.org/bot${token}/deleteWebhook`;
+        https.get(url, (res) => {
+            let data = '';
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+            res.on('end', () => {
+                resolve(JSON.parse(data));
+            });
+        }).on('error', (e) => {
+            reject(e);
+        });
+    });
+};
+
 const start = async () => {
         // Відключення вебхука перед початком опитування
-        await bot.deleteWebhook();
+        const result = await deleteWebhook();
+        console.log('Delete webhook result:', result);
 
         // Тестування доступу до Інтернету
         https.get('https://www.google.com', (res) => {
