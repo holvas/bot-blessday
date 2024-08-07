@@ -1,6 +1,6 @@
 const TelegramApi = require('node-telegram-bot-api'); //імпортуємо пакет
 const  {verseOptions, againOptions} = require('./options');
-const token = '7354137351:AAHNnMPsKk7oqbavuZ8R2TJe2xdjBo4sIHY'; //токен взаїмодії з ботом
+const token = TELEGRAM_BOT_TOKEN //токен взаїмодії з ботом
 //текстові повідомлення
 const bot = new TelegramApi(token, {polling: true}); 
 const chats = {};
