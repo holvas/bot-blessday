@@ -1,9 +1,9 @@
-const TelegramApi = require('node-telegram-bot-api')
+const TelegramApi = require('node-telegram-bot-api') //імпортуємо модуль node-telegram-bot-api
 const {gameOptions, againOptions} = require('./options')
 // const sequelize = require('./db');
 // const UserModel = require('./models');
 
-const token = '7354137351:AAHNnMPsKk7oqbavuZ8R2TJe2xdjBo4sIHY';
+const token = '7354137351:AAHNnMPsKk7oqbavuZ8R2TJe2xdjBo4sIHY'; //токен взаїмодії з ботом
 
 const bot = new TelegramApi(token, {polling: true})
 
@@ -17,6 +17,7 @@ const startGame = async (chatId) => {
     await bot.sendMessage(chatId, 'Отгадывай', gameOptions);
 }
 
+//встановлення команд бота по api
 const start = async () => {
 
     // try {
@@ -32,6 +33,7 @@ const start = async () => {
         {command: '/game', description: 'Гра: вгадай цифру'},
     ])
 
+    //вішаємо слухача на обробку отриманних повідомлень
     bot.on('message', async msg => {
         const text = msg.text;
         const chatId = msg.chat.id;
@@ -40,7 +42,7 @@ const start = async () => {
             if (text === '/start') {
                 // await UserModel.create({chatId})
                 await bot.sendSticker(chatId, 'https://tlgrm.ru/_/stickers/ea5/382/ea53826d-c192-376a-b766-e5abc535f1c9/7.webp')
-                return bot.sendMessage(chatId, `${msg.from.first_name}, Вітаю тебе в телеграм боті!`);
+                return bot.sendMessage(chatId, `${msg.from.first_name}, вітаю тебе в BlessDay боті.`);
             }
             if (text === '/info') {
                 // const user = await UserModel.findOne({chatId})
@@ -49,9 +51,9 @@ const start = async () => {
             if (text === '/game') {
                 return startGame(chatId);
             }
-            return bot.sendMessage(chatId, 'Я тебе не розумію, спробуй ще раз!');
+            return bot.sendMessage(chatId, 'Я тебе не розумію! Будь ласка, обери дію в МЕНЮ');
         } catch (e) {
-            return bot.sendMessage(chatId, 'Виникла якась ошибочпомилка!');
+            return bot.sendMessage(chatId, 'Виникла якась помилка!');
         }
 
     })
