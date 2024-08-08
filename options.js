@@ -1,6 +1,6 @@
 // Опції для кнопок
 module.exports = {
-    //створення кнопок
+//створення кнопок
 verseOptions: {
     reply_markup: JSON.stringify({
         inline_keyboard: [
