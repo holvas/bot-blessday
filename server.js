@@ -1,7 +1,7 @@
 const express = require('express');
 const chalk = require('chalk');
 const app = express();
-const PORT = 3000; //process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const errorMsg = chalk.bgKeyword('white').redBright;
 const successMsg = chalk.bgKeyword('green').white;
