@@ -1,6 +1,9 @@
+const cron = require('node-cron');
 const TelegramApi = require('node-telegram-bot-api'); //імпортуємо пакет
 const  {verseOptions, againOptions} = require('./options');
-const token = '7354137351:AAHNnMPsKk7oqbavuZ8R2TJe2xdjBo4sIHY'; //токен взаїмодії з ботом
+const token = 'process.env.TELEGRAM_BOT_TOKEN'; //токен взаїмодії з ботом
+require('dotenv').config();
+
 //текстові повідомлення
 const bot = new TelegramApi(token, {polling: true}); 
 const chats = {};
@@ -50,6 +53,13 @@ const start = () => {
             return await bot.sendMessage(chatId, `На жаль, ви не вгадали. Я загадував число ${chats[chatId]}.`, againOptions);
         }
     })
-}
+
+
+    cron.schedule('*/25 * * * *', async () => {
+        // const verse = 'Here is your Bible verse!';
+        // bot.sendMessage(chatId, verse);
+        return await bot.sendMessage(chatId, `Тссс ${msg.from.first_name}! Почитаємо Біблію?`, againOptions);
+    });
+    }
 
 start();
