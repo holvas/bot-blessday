@@ -2,6 +2,8 @@ const cron = require('node-cron');
 const TelegramApi = require('node-telegram-bot-api'); //імпортуємо пакет
 require('dotenv').config();
 const  {verseOptions, againOptions} = require('./options');
+
+console.log('TELEGRAM_BOT_TOKEN:', process.env.TELEGRAM_BOT_TOKEN);
 const token = process.env.TELEGRAM_BOT_TOKEN; //токен взаїмодії з ботом
 
 //текстові повідомлення
