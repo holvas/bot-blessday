@@ -64,21 +64,31 @@ const start = async () => {
         bot.on('callback_query', async msg => {
             const data = msg.data;
             const chatId = msg.message.chat.id;
-            if (data === '/again') {
-                return startChoose(chatId);
+
+            try {
+                // Перевіряємо, чи користувач хоче зіграти знову
+                if (data === '/again') {
+                    return startChoose(chatId);
+                }
+                
+                // Знаходимо користувача в базі даних
+                const user = await User.findOne({chatId});
+    
+                // Перевіряємо, чи відповідає вибір користувача загадане число
+                /* if (data === chats[chatId])*/ if (parseInt(data) === chats[chatId]) {
+                    user.right += 1;
+                    await bot.sendMessage(chatId, `Вітаю! Ви вгадали число ${chats[chatId]}!`, againOptions);
+                } else {
+                    user.wrong += 1;
+                    await bot.sendMessage(chatId, `На жаль, ви не вгадали. Я загадував число ${chats[chatId]}.`, againOptions);
+                }
+                await user.save();
+            } catch (err) { 
+                console.error('Помилка обробки callback_query:', error);
+                await bot.sendMessage(chatId, 'Виникла помилка під час обробки вашої відповіді.');
             }
 
-            const user = await User.findOne({chatId});
-
-            if (data === chats[chatId]) {
-                user.right += 1;
-                await bot.sendMessage(chatId, `Вітаю! Ви вгадали число ${chats[chatId]}!`, againOptions);
-            } else {
-                user.right += 1;
-                await bot.sendMessage(chatId, `На жаль, ви не вгадали. Я загадував число ${chats[chatId]}.`, againOptions);
-            }
-            await user.save();
-        })
+        });
 
         // cron.schedule('*/25 * * * *', async () => {
         //     // const verse = 'Here is your Bible verse!';
