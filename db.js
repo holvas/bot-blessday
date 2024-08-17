@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config(); // Завантажуємо змінні середовища
 
 async function connectDB() {
-    const uri = `mongodb+srv://CRAFT:${process.env.PASS}@cluster0.ptncs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+    const uri = process.env.URI;
     
     try {
         await mongoose.connect(uri);
