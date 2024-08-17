@@ -3,6 +3,7 @@ const TelegramApi = require('node-telegram-bot-api'); //імпортуємо п�
 require('dotenv').config();
 const  {verseOptions, againOptions} = require('./options');
 const connectDB = require('./db'); // Імпорт функції підключення до БД
+const User = require('./models'); // Імпортуємо модель User
 const token = process.env.TELEGRAM_BOT_TOKEN; //токен взаїмодії з ботом
 
 //текстові повідомлення
@@ -37,17 +38,23 @@ const start = async () => {
         const text = msg.text; //отримання повідомлень
         const chatId = msg.chat.id;  
         
-        if (text === '/start') {
-            await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/0cc/ba1/0ccba11f-e506-3c8c-8862-a4d914dcf683/2.jpg`); //відправка повідомлень
-            return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Тебе вітає BlessDay бот. Тут ти отримуватимеш щоденне благословіння з Божого Слова`);
+        try {
+            if (text === '/start') {
+                await User.create({chatId});
+                await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/0cc/ba1/0ccba11f-e506-3c8c-8862-a4d914dcf683/2.jpg`); //відправка повідомлень
+                return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Тебе вітає BlessDay бот. Тут ти отримуватимеш щоденне благословіння з Божого Слова`);
+            }
+            if (text === '/info') {
+                const user = await User.findOne({chatId});
+                return bot.sendMessage(chatId, `Тебе звуть ${msg.from.first_name} ${msg.from.last_name}/ У тебе в грі правильних відповідей ${User.right}, неправильних відповідей ${User.wrong}`);
+            }
+            if (text === '/game') {
+                return startChoose(chatId);
+            }
+            return bot.sendMessage(chatId, 'Я не зрозумів. Будь ласка, обери дію в МЕНЮ');
+        } catch (err) {
+            return bot.sendMessage(chatId, 'Виникла помилочка ooops!')
         }
-        if (text === '/info') {
-            return bot.sendMessage(chatId, `Тебе звуть ${msg.from.first_name} ${msg.from.last_name}! Твій нік ${msg.from.username}`);
-        }
-        if (text === '/game') {
-            return startChoose(chatId);
-        }
-        return bot.sendMessage(chatId, 'Я не зрозумів. Будь ласка, обери дію в МЕНЮ');
     }); 
 
     bot.on('callback_query', async msg => {
