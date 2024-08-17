@@ -2,6 +2,7 @@ const cron = require('node-cron');
 const TelegramApi = require('node-telegram-bot-api'); //імпортуємо пакет
 require('dotenv').config();
 const  {verseOptions, againOptions} = require('./options');
+const connectDB = require('./db'); // Імпорт функції підключення до БД
 const token = process.env.TELEGRAM_BOT_TOKEN; //токен взаїмодії з ботом
 
 //текстові повідомлення
@@ -15,7 +16,15 @@ const startChoose = async (chatId) => {
     await bot.sendMessage(chatId, 'Напиши оберане число', verseOptions);
 }
 
-const start = () => {
+const start = async () => {
+    try { 
+        await connectDB(); //Підключення до бази даних
+    } catch (err) {
+        console.log('Підключення до БД не відбулось :(', err);
+        return;
+    }
+
+
     //встановлення команд бота по api
     bot.setMyCommands([
         {command: '/start', description: 'Привітання'},
