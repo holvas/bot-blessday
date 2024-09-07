@@ -25,7 +25,6 @@ const start = async () => {
             return;
         }
 
-
         //встановлення команд бота по api
         bot.setMyCommands([
             {command: '/start', description: 'Привітання'},
