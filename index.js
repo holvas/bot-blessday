@@ -31,8 +31,8 @@ const start = async () => {
             {command: '/start', description: 'Привітання'},
             {command: '/info', description: 'Інфо користувача'},
             {command: '/game', description: 'Грати в гру'},
+        ])
 
-        ]) 
         //вішаємо слухача на обробку отриманних повідомлень
         bot.on('message', async msg => {
             const text = msg.text; //отримання повідомлень
@@ -46,7 +46,7 @@ const start = async () => {
                         await User.create({ chatId });
                     }
                     await bot.sendMessage(chatId, 'https://tlgrm.eu/_/stickers/a20/d3e/a20d3e8e-c30a-40fa-8646-9d82f922ad02/5.webp'); 
-                    return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Пропоную тобі зіграти зі мною в гру!`); //відправка повідомлень
+                    return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Пропоную тобі зіграти зі мною в гру!`, startGame); //відправка повідомлень
                 }
                 if (text === '/info') {
                     const user = await User.findOne({chatId});
@@ -74,7 +74,7 @@ const start = async () => {
                 // Знаходимо користувача в базі даних
                 const user = await User.findOne({chatId});
     
-                // Перевіряємо, чи відповідає вибір користувача загадане число
+                // Перевіряємо, чи відповідає вибір користувача  & загадане число
                 /* if (data === chats[chatId])*/ if (parseInt(data) === chats[chatId]) {
                     user.right += 1;
                     await bot.sendMessage(chatId, `Вітаю! Ви вгадали число ${chats[chatId]}!`, againOptions);
