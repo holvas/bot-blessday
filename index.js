@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const TelegramApi = require('node-telegram-bot-api'); //імпортуємо пакет
 require('dotenv').config();
-const  {verseOptions, againOptions} = require('./options');
+const  { numberOptions, againOptions, startGame } = require('./options');
 const connectDB = require('./db'); // Імпорт функції підключення до БД
 const User = require('./models'); // Імпортуємо модель User
 const token = process.env.TELEGRAM_BOT_TOKEN; //токен взаїмодії з ботом
@@ -11,10 +11,10 @@ const bot = new TelegramApi(token, {polling: true});
 const chats = {};
 
 const startChoose = async (chatId) => {
-    await bot.sendMessage(chatId, 'Обери число від 0 до 10');
+    // await bot.sendMessage(chatId, 'Обери число від 0 до 10');
     const randomNumber = Math.floor(Math.random() * 10);
     chats[chatId] = randomNumber;
-    await bot.sendMessage(chatId, 'Напиши оберане число', verseOptions);
+    await bot.sendMessage(chatId, 'Напиши обране число', numberOptions);
 }
 
 const start = async () => {
@@ -29,8 +29,8 @@ const start = async () => {
         //встановлення команд бота по api
         bot.setMyCommands([
             {command: '/start', description: 'Привітання'},
-            {command: '/info', description: 'Інфо про користувача'},
-            {command: '/game', description: 'Оримати вірш'},
+            {command: '/info', description: 'Інфо користувача'},
+            {command: '/game', description: 'Грати в гру'},
 
         ]) 
         //вішаємо слухача на обробку отриманних повідомлень
@@ -45,8 +45,8 @@ const start = async () => {
                     if (!existingUser) {
                         await User.create({ chatId });
                     }
-                    await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/0cc/ba1/0ccba11f-e506-3c8c-8862-a4d914dcf683/2.jpg`); //відправка повідомлень
-                    return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Тебе вітає BlessDay бот. Обери бажану дію в меню.`);
+                    await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/0cc/ba1/0ccba11f-e506-3c8c-8862-a4d914dcf683/2.jpg`); 
+                    return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Пропоную тобі зіграти зі мною в гру!`); //відправка повідомлень
                 }
                 if (text === '/info') {
                     const user = await User.findOne({chatId});
