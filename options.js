@@ -24,7 +24,7 @@ module.exports = {
     startGame: {
         reply_markup: JSON.stringify({
             inline_keyboard: [
-                [{text: 'Почати гру', callback_data: '/again'}]
+                [{text: 'Почати гру', callback_data: '/game'}]
             ]
         })
     }
