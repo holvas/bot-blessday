@@ -5,7 +5,8 @@ const  { numberOptions, againOptions, startGame } = require('./options');
 const connectDB = require('./db'); // Імпорт функції підключення до БД
 const User = require('./models'); // Імпортуємо модель User
 const token = process.env.TELEGRAM_BOT_TOKEN; //токен взаїмодії з ботом
-const avatar = procrss.evn.AVATAR;
+const avatar = process.evn.AVATAR;
+
 //текстові повідомлення
 const bot = new TelegramApi(token, {polling: true}); 
 const chats = {};
