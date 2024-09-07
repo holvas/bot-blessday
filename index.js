@@ -11,10 +11,10 @@ const bot = new TelegramApi(token, {polling: true});
 const chats = {};
 
 const startChoose = async (chatId) => {
-    // await bot.sendMessage(chatId, 'Обери число від 0 до 10');
+    //await bot.sendMessage(chatId, 'Обери число від 0 до 10');
     const randomNumber = Math.floor(Math.random() * 10);
     chats[chatId] = randomNumber;
-    await bot.sendMessage(chatId, 'Напиши обране число', numberOptions);
+    await bot.sendMessage(chatId, 'Вкажи обране число', numberOptions);
 }
 
 const start = async () => {
