@@ -5,7 +5,7 @@ const  { numberOptions, againOptions, startGame } = require('./options');
 const connectDB = require('./db'); // Імпорт функції підключення до БД
 const User = require('./models'); // Імпортуємо модель User
 const token = process.env.TELEGRAM_BOT_TOKEN; //токен взаїмодії з ботом
-
+const avatar = procrss.evn.AVATAR;
 //текстові повідомлення
 const bot = new TelegramApi(token, {polling: true}); 
 const chats = {};
@@ -45,7 +45,7 @@ const start = async () => {
                     if (!existingUser) {
                         await User.create({ chatId });
                     }
-                    await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/a20/d3e/a20d3e8e-c30a-40fa-8646-9d82f922ad02/5.webp`); 
+                    await bot.sendMessage(chatId, avatar); 
                     return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Пропоную тобі зіграти зі мною в гру!`); //відправка повідомлень
                 }
                 if (text === '/info') {
