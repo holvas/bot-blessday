@@ -45,7 +45,7 @@ const start = async () => {
                     if (!existingUser) {
                         await User.create({ chatId });
                     }
-                    await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/0cc/ba1/0ccba11f-e506-3c8c-8862-a4d914dcf683/2.jpg`); 
+                    await bot.sendMessage(chatId, `https://tlgrm.eu/_/stickers/a20/d3e/a20d3e8e-c30a-40fa-8646-9d82f922ad02/5.webp`); 
                     return bot.sendMessage(chatId, `Привіт, ${msg.from.first_name}! Пропоную тобі зіграти зі мною в гру!`); //відправка повідомлень
                 }
                 if (text === '/info') {
